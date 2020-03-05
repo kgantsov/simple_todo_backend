@@ -2,7 +2,7 @@ from app.db import db
 
 
 class UserModel(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'user'
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.Unicode())
