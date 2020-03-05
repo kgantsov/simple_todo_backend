@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  api:
+    build: ./app
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8006
+    depends_on:
+      - postgres
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8006:8006"
+    expose:
+      - "8006"
+    environment:
+      DATABASE_URL: postgres://todo:332je9wr8zgife7zapnoq30wjc6i834wsvvjj9c81benwozckltgpd2h14wpfpmn@postgres/todo
+  postgres:
+    image: postgres:9.6.3-alpine
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_DB: todo
+      POSTGRES_PASSWORD: 332je9wr8zgife7zapnoq30wjc6i834wsvvjj9c81benwozckltgpd2h14wpfpmn
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data/
+    networks:
+      - backend
+
+networks:
+  frontend:
+  backend:
