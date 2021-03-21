@@ -21,7 +21,7 @@ async def get_todos(user: UserModel = Depends(get_current_active_user)):
         db.and_(
             TodoModel.user_id == user.id,
         )
-    ).limit(200).gino.all()
+    ).order_by(TodoModel.id.desc()).limit(200).gino.all()
 
     return TodosSchema.parse_obj({'objects': [x.to_dict() for x in todos]})
 
